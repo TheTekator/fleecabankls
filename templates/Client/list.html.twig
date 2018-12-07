@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Liste des clients</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Nom</td>
+                <td>Téléphone</td>
+                <td>Liste des comptes</td>
+                <td>Status prêts</td>
+                <td>Eparne en cours ?</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for monClient in mesClients %}
+                <tr>
+                    <td><a href="{{ path('show_client', {'id' : monClient.id}) }}">{{ monClient.name }}</a></td>
+                    <td>{{ monClient.phone }}</td>
+                    <td>
+                        {% for unCompte in monClient.comptes %}
+                            <a href="{{ path('show_compte', {'id': unCompte.id}) }}">{{ unCompte.number }}</a>
+                            {% if not loop.last %} <br/>
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    {% if monClient.hasPretEnCours %}<td style="background-color: green">En cours</td>
+                    {% else %}<td style="background-color: white">Rien</td>
+                    {% endif %}
+                    <td>O/N</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+        <tfoot>
+            <tr>
+                <td>Nom</td>
+                <td>Téléphone</td>
+                <td>Liste des comptes</td>
+                <td>Prêt en cours ?</td>
+                <td>Eparne en cours ?</td>
+            </tr>
+        </tfoot>
+    </table>
+{% endblock %}

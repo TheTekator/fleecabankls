@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{% block title %}FleecaBank Los Santos{% endblock %}</title>
+        <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" rel="stylesheet">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+        <link rel="stylesheet" href="{{ asset('css/perso.css') }}">
+        {% block stylesheets %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <header>
+                <div id="logo">
+                    <h1 id="logoNom">https://docs.google.com/spreadsheets/d/1YUmy01ARaLFIikpXrsDQ2B8mt_Eb_ObTxFQfZk0c3G8</h1>
+                </div>
+            </header>
+
+            <div id="content">
+                <nav id="myMenu">
+                    <ul>
+                        <li {% if app.request.attributes.get('_route') starts with 'index' %}class="active"{% endif %}>
+                            <a href="{{ path("index") }}" id="menuAccueil">Accueil</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') starts with 'client' %}class="active"{% endif %}>
+                            <a href="{{ path("list_clients") }}" id="menuClients">Clients</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') starts with 'prets' %}class="active"{% endif %}>
+                            <a href="{{ path("list_prets") }}" id="menuPrets">Prêts</a>
+                        </li>
+                        <li {% if app.request.attributes.get('_route') starts with 'contact' %}class="active"{% endif %}>
+                            <a href="{{ path("contact") }}" id="menuContact">Contact</a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <section id="myContent">
+                    {% for message in app.session.flashbag.get('info') %}
+                        <p>Message flash : {{ message }}</p>
+                    {% endfor %}
+                    {% block content %}{% endblock %}
+                </section>
+            </div>
+
+            <footer>
+                <p>
+                    {% block footer %}
+                <p>Produit par une société secrète. © {{ 'now'|date('Y') }} and beyond.</p>
+                {% endblock %}
+                </p>
+            </footer>
+        </div>
+        {% block javascripts %}{% endblock %}
+    </body>
+</html>

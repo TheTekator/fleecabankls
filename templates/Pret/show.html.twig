@@ -1,0 +1,68 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Fiche du prêt de {{ monPret.client.name }}</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>En cours ?</td>
+                <td>Raison</td>
+                <td>Montant</td>
+                <td>Intérêts</td>
+                <td>Durée</td>
+                <td>Somme dûe</td>
+                <td>Date d'ouverture</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>
+                    {% if monPret.termine %} Terminé
+                    {% else %} En cours
+                    {% endif %}
+                </td>
+                <td>{{ monPret.raison }}</td>
+                <td>{{ monPret.montant|number_format(0, ',', '.') }} $</td>
+                <td>{{ monPret.interet }}%</td>
+                <td>{{ monPret.duree }} semaines</td>
+                <td>{{ (monPret.montant * ((monPret.interet / 100) + 1))|number_format(0, ',', '.') }} $</td>
+                <td>{{ monPret.dateOuverture|date('d/m/Y') }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <table>
+        <caption style="caption-side: top">Calendrier des paiements</caption>
+        <thead>
+            <tr>
+                <td>Date du paiement</td>
+                <td>Montant</td>
+                <td>Status</td>
+                <td>Restant</td>
+            </tr>
+        </thead>
+        <tbody>
+        {% set restant = monPret.montant * ((monPret.interet / 100) + 1) %}
+        {% for monVirement in monPret.virements %}
+                <tr>
+                    <td>{{ monVirement.datePrevue|date('d/m/Y') }}</td>
+                    <td>{{ monVirement.montant|number_format(0, ',', '.') }} $</td>
+                    {% if monVirement.valide %}
+                        <td style="background-color: green">Effectué</td>
+                    {% elseif monVirement.isToday %}
+                        <td style="background-color: yellow">Aujourd'hui</td>
+                    {% elseif monVirement.isLate %}
+                        <td style="background-color: red">En retard</td>
+                    {% else %}
+                        <td>En attente</td>
+                    {% endif %}
+                    <td>{{ (restant - monVirement.montant)|number_format(0, ',', '.') }} $</td>
+                </tr>
+                {% set restant = restant - monVirement.montant %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

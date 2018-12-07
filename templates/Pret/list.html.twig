@@ -1,0 +1,50 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Liste des prêts</h1>
+
+    <div>
+        <a href="{{ path('list_pretsEnCours') }}">Prêts en cours</a> -
+        <a href="{{ path('list_pretsLate') }}">Prêts en retard</a> -
+        <a href="{{ path('list_pretsToday') }}">Prêts à payer aujourd'hui</a> -
+        <a href="{{ path('list_prets') }}">Tous les prêts</a>
+    </div>
+
+    <hr/>
+
+    <table>
+        <thead>
+        <tr>
+            <td>Status</td>
+            <td>Client</td>
+            <td>Téléphone</td>
+            <td>Montant emprunté</td>
+            <td>Détails</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for monPret in mesPrets %}
+            <tr>
+                {% if monPret.termine %}<td style="background-color: white">Terminé</td>
+                {% elseif monPret.isLate %}<td style="background-color: red">En retard</td>
+                {% elseif monPret.isToday %}<td style="background-color: yellow">Aujourd'hui</td>
+                {% else %}<td style="background-color: green">En cours</td>
+                {% endif %}
+                <td>{{ monPret.client.name }}</td>
+                <td>{{ monPret.client.phone }}</td>
+                <td>{{ monPret.montant }}</td>
+                <td><a href="{{ path('show_pret', {'id' : monPret.id}) }}">Voir</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Status</td>
+            <td>Client</td>
+            <td>Téléphone</td>
+            <td>Montant emprunté</td>
+            <td>Détails</td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

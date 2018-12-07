@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Fiche du client : {{ monClient.name }}</h1>
+
+    <table>
+        <caption style="caption-side: top">Informations générales</caption>
+        <thead>
+            <tr>
+                <td>Numéro de téléphone</td>
+                <td>Dernier emploi connu</td>
+                <td>Lien contrat</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ monClient.phone }}</td>
+
+                {% if monClient.dernierEmploi is not null %}
+                    <td>{{ monClient.dernierEmploi }}</td>
+                    <td><a href="{{ monClient.lienDernierEmploi }}" target="_blank">Lien du contrat</a></td>
+                {% else %}<td>Inconnu</td><td></td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <table>
+        <caption style="caption-side: top">Informations comptes</caption>
+        <thead>
+            <tr>
+                <td>Numéro de compte</td>
+                <td>Type de compte</td>
+                <td>Date d'ouverture</td>
+                <td>Toujours ouvert ?</td>
+            </tr>
+        </thead>
+        <tbody>
+            {% for monCompte in monClient.comptes %}
+                <tr>
+                    <td><a href="{{ path('show_compte', {'id': monCompte.id}) }}">{{ monCompte.number }}</a></td>
+                    <td>{{ monCompte.genreCompte.name }}</td>
+                    <td>{{ monCompte.dateOuverture|date('d/m/Y') }}</td>
+                    <td
+                            {% if monCompte.open %} style="background-color: green"
+                            {% else %} style="background-color: red"
+                            {% endif %}
+                    ></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <hr>
+
+    <table>
+        <caption style="caption-side: top">Informations prêts</caption>
+        <thead>
+        <tr>
+            <td>Status du prêt</td>
+            <td>Somme</td>
+            <td>Date du prêt</td>
+            <td>Durée</td>
+            <td>Intérêts</td>
+            <td>Remboursement/semaine</td>
+            <td>Détails</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for monPret in monClient.prets %}
+            <tr>
+                {% if monPret.termine %}<td style="background-color: white">Terminé</td>
+                {% elseif monPret.isLate %}<td style="background-color: red">En retard</td>
+                {% elseif monPret.isToday %}<td style="background-color: yellow">Aujourd'hui</td>
+                {% else %}<td style="background-color: green">En cours</td>
+                {% endif %}
+                <td>{{ monPret.montant|number_format(0, ',', '.') }} $</td>
+                <td>{{ monPret.dateOuverture|date('d/m/Y') }}</td>
+                <td>{{ monPret.duree }} semaines</td>
+                <td>{{ monPret.interet }}%</td>
+                <td>{{ ((monPret.montant * ((monPret.interet / 100) + 1)) / monPret.duree)|number_format(0, ',', '.') }} $</td>
+                <td><a href="{{ path('show_pret', {'id': monPret.id}) }}">Détails</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
