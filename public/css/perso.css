@@ -31,12 +31,12 @@ body
     font-weight: bold;
     color: #444444;
     line-height: 30px;
-    margin: 0px;
+    margin: 0;
 }
 
 #myMenu
 {
-    width: 200px;
+    width: 150px;
     float: left;
 }
 
@@ -54,7 +54,7 @@ body
 #myContent
 {
     padding: 20px;
-    margin-left: 215px;
+    margin-left: 165px;
 }
 
 footer
@@ -64,7 +64,10 @@ footer
     text-align: center;
 }
 
-
+.col-form-label
+{
+    text-align: right;
+}
 
 
 

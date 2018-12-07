@@ -3,6 +3,10 @@
 {% block content %}
     <h1>Fiche du client : {{ monClient.name }}</h1>
 
+    <div>
+        <a href="{{ path('edit_client', {'id': monClient.id}) }}">Editer la fiche du client</a>
+    </div>
+
     <table>
         <caption style="caption-side: top">Informations générales</caption>
         <thead>
@@ -18,8 +22,12 @@
 
                 {% if monClient.dernierEmploi is not null %}
                     <td>{{ monClient.dernierEmploi }}</td>
+                {% else %}<td>Inconnu</td>
+                {% endif %}
+
+                {% if monClient.lienDernierEmploi is not null %}
                     <td><a href="{{ monClient.lienDernierEmploi }}" target="_blank">Lien du contrat</a></td>
-                {% else %}<td>Inconnu</td><td></td>
+                {% else %}<td>Inconnu</td>
                 {% endif %}
             </tr>
         </tbody>

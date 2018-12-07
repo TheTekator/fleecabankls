@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Editer la fiche de {{ monFormulaire.vars.data.name }}</h1>
+
+    {{ include('Client/form.html.twig') }}
+
+    <div>
+        <a href="{{ path('show_client', {'id': monFormulaire.vars.data.id}) }}">Retour à la fiche client</a>
+    </div>
+{% endblock %}

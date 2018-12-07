@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}FleecaBank Los Santos{% endblock %}</title>
@@ -37,8 +37,12 @@
                 </nav>
 
                 <section id="myContent">
-                    {% for message in app.session.flashbag.get('info') %}
-                        <p>Message flash : {{ message }}</p>
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
                     {% endfor %}
                     {% block content %}{% endblock %}
                 </section>
@@ -49,7 +53,6 @@
                     {% block footer %}
                 <p>Produit par une société secrète. © {{ 'now'|date('Y') }} and beyond.</p>
                 {% endblock %}
-                </p>
             </footer>
         </div>
         {% block javascripts %}{% endblock %}

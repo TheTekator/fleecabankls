@@ -3,7 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Client;
+use App\Form\ClientType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -22,8 +24,63 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/client/{id}", name="show_client")
-     * @param $id Identifiant du client
+     * @Route("/client/add", name="add_client")
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function add(Request $request)
+    {
+        $monClient = new Client();
+        $monFormulaire = $this->createForm(ClientType::class, $monClient);
+        $monFormulaire->handleRequest($request);
+
+        if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
+        {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($monClient);
+            $em->flush();
+
+            $this->addFlash('success', 'Client correctement ajouté.');
+
+            return $this->redirectToRoute('show_client',
+                array('id' => $monClient->getId()));
+        }
+
+        return $this->render('Client/add.html.twig',
+            array('monFormulaire' => $monFormulaire->createView()));
+    }
+
+    /**
+     * @Route("/client/edit/{id}", name="edit_client", requirements={"id"="\d+"})
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function edit(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monClient = $em->getRepository(Client::class)->find($id);
+
+        $monFormulaire = $this->createForm(ClientType::class, $monClient);
+        $monFormulaire->handleRequest($request);
+
+        if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
+        {
+            $em->persist($monClient);
+            $em->flush();
+
+            $this->addFlash('success', 'Client correctement modifié.');
+
+            return $this->redirectToRoute('show_client',
+                array('id' => $monClient->getId()));
+        }
+
+        return $this->render('Client/edit.html.twig',
+            array('monFormulaire' => $monFormulaire->createView()));
+    }
+
+    /**
+     * @Route("/client/{id}", name="show_client", requirements={"page"="\d+"})
+     * @param int $id Identifiant du client
      * @return Response Affichage de la page du client
      */
     public function show($id)
@@ -32,6 +89,6 @@ class ClientController extends AbstractController
         $monClient = $em->getRepository(Client::class)->find($id);
 
         return $this->render('Client/show.html.twig',
-                    array('monClient' => $monClient));
+            array('monClient' => $monClient));
     }
 }

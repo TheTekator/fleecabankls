@@ -1,0 +1,43 @@
+{{ form_start(monFormulaire) }}
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.name, "Nom :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.name) }}
+    <div class="col-sm-6">
+        {{ form_widget(monFormulaire.name, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.phone, "Téléphone :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.phone) }}
+    <div class="col-sm-6">
+        {{ form_widget(monFormulaire.phone, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.dernierEmploi, "Dernier emploi :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.dernierEmploi) }}
+    <div class="col-sm-6">
+        {{ form_widget(monFormulaire.dernierEmploi, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.lienDernierEmploi, "Lien dernier emploi :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.lienDernierEmploi) }}
+    <div class="col-sm-6">
+        {{ form_widget(monFormulaire.lienDernierEmploi, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+<br/>
+<div class="form-group row">
+    <div class="offset-sm-2 col-sm-6">
+        <input type="submit" class="btn btn-primary form-control" value="Valider">
+    </div>
+</div>
+
+{{ form_rest(monFormulaire) }}
+{{ form_errors(monFormulaire) }}
+{{ form_end(monFormulaire) }}
