@@ -2,15 +2,18 @@
 
 namespace App\Controller;
 
+use App\Entity\Client;
 use App\Entity\Pret;
+use App\Form\PretType;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 class PretController extends AbstractController
 {
     /**
-     * @Route("/pret/{id}", name="show_pret")
+     * @Route("/pret/{id}", name="show_pret", requirements={"id"="\d+"})
      * @param $id
      * @return Response
      */
@@ -21,6 +24,59 @@ class PretController extends AbstractController
 
         return $this->render('Pret/show.html.twig',
                         array('monPret' => $monPret));
+    }
+
+    /**
+     * @Route("/pret/add/{id}", name="add_pret", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function addPret(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monPret = new Pret();
+        $monPret->setClient($em->getRepository(Client::class)->find($id));
+        $monFormulaire = $this->createForm(PretType::class, $monPret);
+        $monFormulaire->handleRequest($request);
+
+        if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
+        {
+            $em->persist($monPret);
+            $em->flush();
+
+            $this->addFlash('success', 'Prêt correctement ajouté.');
+
+            return $this->redirectToRoute('show_pret',
+                array('id' => $monPret->getId()));
+        }
+
+        return $this->render('Pret/add.html.twig',
+            array('monFormulaire' => $monFormulaire->createView()));
+    }
+
+    /**
+     * @Route("/pret/edit/{id}", name="edit_pret", requirements={"id"="\d+"})
+     */
+    public function editPret(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monPret = $em->getRepository(Pret::class)->find($id);
+        $monFormulaire =  $this->createForm(PretType::class, $monPret);
+        $monFormulaire->handleRequest($request);
+
+        if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
+        {
+            $em->flush();
+
+            $this->addFlash('success', 'Prêt correctement modifié.');
+
+            return $this->redirectToRoute('show_pret',
+                array('id' => $monPret->getId()));
+        }
+
+        return $this->render('Pret/edit.html.twig',
+            array('monFormulaire' => $monFormulaire->createView()));
     }
 
     /**

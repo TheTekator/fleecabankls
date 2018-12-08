@@ -101,6 +101,11 @@
                 <td><a href="{{ path('show_pret', {'id': monPret.id}) }}">Détails</a></td>
             </tr>
         {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('add_pret', {'id': monClient.id}) }}">Créer un prêt</a>
+            </td>
+        </tr>
         </tbody>
     </table>
 {% endblock %}

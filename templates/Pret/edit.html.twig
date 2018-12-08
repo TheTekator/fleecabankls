@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Editer prêt de {{ monFormulaire.vars.value.client.name }}</h1>
+
+    {{ include('Pret/form.html.twig') }}
+
+    <div>
+        <a href="{{ path('show_pret', {'id': monFormulaire.vars.value.id}) }}">Retour à la fiche du prêt</a>
+    </div>
+{% endblock %}

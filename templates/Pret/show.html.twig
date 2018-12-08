@@ -1,7 +1,7 @@
 {% extends 'base.html.twig' %}
 
 {% block content %}
-    <h1>Fiche du prêt de {{ monPret.client.name }}</h1>
+    <h1>Fiche du prêt de <a href="{{ path('show_client', {'id': monPret.client.id}) }}">{{ monPret.client.name }}</a></h1>
 
     <table>
         <thead>
@@ -12,6 +12,7 @@
                 <td>Intérêts</td>
                 <td>Durée</td>
                 <td>Somme dûe</td>
+                <td>Remboursement hebdo</td>
                 <td>Date d'ouverture</td>
             </tr>
         </thead>
@@ -26,8 +27,11 @@
                 <td>{{ monPret.montant|number_format(0, ',', '.') }} $</td>
                 <td>{{ monPret.interet }}%</td>
                 <td>{{ monPret.duree }} semaines</td>
-                <td>{{ (monPret.montant * ((monPret.interet / 100) + 1))|number_format(0, ',', '.') }} $</td>
+                {% set montantTotal = monPret.montant * ((monPret.interet / 100) + 1) %}
+                <td>{{ montantTotal|number_format(0, ',', '.') }} $</td>
+                <td>{{ montantTotal / monPret.duree|number_format(0, ',', '.') }} $</td>
                 <td>{{ monPret.dateOuverture|date('d/m/Y') }}</td>
+                <td><a href="{{ path('edit_pret', {'id': monPret.id}) }}">Modifier</a></td>
             </tr>
         </tbody>
     </table>

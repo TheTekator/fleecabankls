@@ -61,6 +61,9 @@ class Pret
 
     public function __construct()
     {
+        $today = new \DateTime();
+        $today->sub(new \DateInterval("P2Y"));
+        $this->dateOuverture = $today;
         $this->virements = new ArrayCollection();
     }
 
