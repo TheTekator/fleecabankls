@@ -14,7 +14,7 @@ class PretController extends AbstractController
      * @param $id
      * @return Response
      */
-    public function show($id)
+    public function showPret($id)
     {
         $em = $this->getDoctrine()->getManager();
         $monPret = $em->getRepository(Pret::class)->find($id);
@@ -26,7 +26,7 @@ class PretController extends AbstractController
     /**
      * @Route("/prets", name="list_prets")
      */
-    public function list()
+    public function listPrets()
     {
         $em = $this->getDoctrine()->getManager();
         $mesPrets = $em->getRepository(Pret::class)->findAll();
@@ -38,7 +38,7 @@ class PretController extends AbstractController
     /**
      * @Route("/prets/retard", name="list_pretsLate")
      */
-    public function listRetard()
+    public function listPretsRetard()
     {
         $em = $this->getDoctrine()->getManager();
         $mesPretsTmp = $em->getRepository(Pret::class)->findAll();
@@ -56,7 +56,7 @@ class PretController extends AbstractController
     /**
      * @Route("/prets/aujourdhui", name="list_pretsToday")
      */
-    public function listToday()
+    public function listPretsToday()
     {
         $em = $this->getDoctrine()->getManager();
         $mesPretsTmp = $em->getRepository(Pret::class)->findAll();
@@ -74,7 +74,7 @@ class PretController extends AbstractController
     /**
      * @Route("/prets/encours", name="list_pretsEnCours")
      */
-    public function listCours()
+    public function listPretsCours()
     {
         $em = $this->getDoctrine()->getManager();
         $mesPretsTmp = $em->getRepository(Pret::class)->findAll();

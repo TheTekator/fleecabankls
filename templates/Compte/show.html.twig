@@ -8,6 +8,8 @@
         <tr>
             <td>Nom du client</td>
             <td>Type de compte</td>
+            <td>Frais d'ouverture</td>
+            <td>Frais de tenue de compte</td>
             <td>Date ouverture</td>
             <td>Toujours ouvert ?</td>
         </tr>
@@ -16,6 +18,8 @@
         <tr>
             <td><a href="{{ path('show_client', {'id': monCompte.client.id}) }}">{{ monCompte.client.name }}</a></td>
             <td>{{ monCompte.genreCompte.name }}</td>
+            <td>{{ monCompte.fraisOuverture|number_format(0, ',', '.') }} $</td>
+            <td>{{ monCompte.fraisTenue|number_format(0, ',', '.') }} $</td>
             <td>{{ monCompte.dateOuverture|date('d/m/Y') }}</td>
             <td
                     {% if monCompte.open %} style="background-color: green"

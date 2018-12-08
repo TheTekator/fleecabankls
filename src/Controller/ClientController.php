@@ -14,7 +14,7 @@ class ClientController extends AbstractController
     /**
      * @Route("/clients", name="list_clients")
      */
-    public function list()
+    public function listClients()
     {
         $em = $this->getDoctrine()->getManager();
         $mesClients = $em->getRepository(Client::class)->findAll();
@@ -28,7 +28,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function add(Request $request)
+    public function addClient(Request $request)
     {
         $monClient = new Client();
         $monFormulaire = $this->createForm(ClientType::class, $monClient);
@@ -55,7 +55,7 @@ class ClientController extends AbstractController
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */
-    public function edit(Request $request, $id)
+    public function editClient(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
         $monClient = $em->getRepository(Client::class)->find($id);
@@ -79,11 +79,11 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/client/{id}", name="show_client", requirements={"page"="\d+"})
+     * @Route("/client/{id}", name="show_client", requirements={"id"="\d+"})
      * @param int $id Identifiant du client
      * @return Response Affichage de la page du client
      */
-    public function show($id)
+    public function showClient($id)
     {
         $em = $this->getDoctrine()->getManager();
         $monClient = $em->getRepository(Client::class)->find($id);

@@ -43,6 +43,16 @@ class Compte
      */
     private $client;
 
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $fraisOuverture;
+
+    /**
+     * @ORM\Column(type="integer")
+     */
+    private $fraisTenue;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -104,6 +114,30 @@ class Compte
     public function setClient(?Client $client): self
     {
         $this->client = $client;
+
+        return $this;
+    }
+
+    public function getFraisOuverture(): ?int
+    {
+        return $this->fraisOuverture;
+    }
+
+    public function setFraisOuverture(int $fraisOuverture): self
+    {
+        $this->fraisOuverture = $fraisOuverture;
+
+        return $this;
+    }
+
+    public function getFraisTenue(): ?int
+    {
+        return $this->fraisTenue;
+    }
+
+    public function setFraisTenue(int $fraisTenue): self
+    {
+        $this->fraisTenue = $fraisTenue;
 
         return $this;
     }

@@ -41,6 +41,7 @@
             <tr>
                 <td>Numéro de compte</td>
                 <td>Type de compte</td>
+                <td>Frais de tenue de compte</td>
                 <td>Date d'ouverture</td>
                 <td>Toujours ouvert ?</td>
             </tr>
@@ -50,12 +51,19 @@
                 <tr>
                     <td><a href="{{ path('show_compte', {'id': monCompte.id}) }}">{{ monCompte.number }}</a></td>
                     <td>{{ monCompte.genreCompte.name }}</td>
+                    <td>{{ monCompte.fraisTenue|number_format(0, ',', '.') }} $</td>
                     <td>{{ monCompte.dateOuverture|date('d/m/Y') }}</td>
                     <td
                             {% if monCompte.open %} style="background-color: green"
                             {% else %} style="background-color: red"
                             {% endif %}
                     ></td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun compte -
+                        <a href="{{ path('add_compte', {'id': monClient.id}) }}">Créer un compte</a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

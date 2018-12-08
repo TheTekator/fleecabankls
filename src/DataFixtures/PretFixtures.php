@@ -1,4 +1,6 @@
-<?php
+<?php /** @noinspection PhpUnhandledExceptionInspection */
+
+/** @noinspection PhpParamsInspection */
 
 namespace App\DataFixtures;
 
