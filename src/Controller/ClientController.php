@@ -65,7 +65,6 @@ class ClientController extends AbstractController
 
         if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
         {
-            $em->persist($monClient);
             $em->flush();
 
             $this->addFlash('success', 'Client correctement modifié.');

@@ -1,0 +1,63 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.fr.min.js"></script>
+
+{{ form_start(monFormulaire) }}
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.genreCompte, "Type de compte :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.genreCompte) }}
+    <div class="col-sm-6">
+        {{ form_widget(monFormulaire.genreCompte, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.number, "N° de compte :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.number) }}
+    <div class="col-sm-3">
+        {{ form_widget(monFormulaire.number, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_label(monFormulaire.open, "Ouvert ? :", {'label_attr': {'class': 'col-sm-1 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.open) }}
+    <div class="col-sm-1">
+        {{ form_widget(monFormulaire.open, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.dateOuverture, "Date de l'ouverture :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.dateOuverture) }}
+    <div class="col-sm-2">
+        {{ form_widget(monFormulaire.dateOuverture, {'attr': {'class': 'form-control datepicker'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.fraisOuverture, "Frais d'ouverture : ", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.fraisOuverture) }}
+    <div class="col-sm-2">
+        {{ form_widget(monFormulaire.fraisOuverture, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    {{ form_label(monFormulaire.fraisTenue, "Frais de tenue de compte : ", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.fraisTenue) }}
+    <div class="col-sm-2">
+        {{ form_widget(monFormulaire.fraisTenue, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+{{ form_rest(monFormulaire) }}
+{{ form_errors(monFormulaire) }}
+<br/>
+<div class="form-group row">
+    <div class="offset-sm-2 col-sm-6">
+        <input type="submit" class="btn btn-primary form-control" value="Valider">
+    </div>
+</div>
+
+{{ form_end(monFormulaire) }}
+
+<script>
+    $('.datepicker').datepicker({
+        format: 'dd/mm/yyyy'
+    });
+</script>

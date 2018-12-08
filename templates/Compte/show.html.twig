@@ -26,6 +26,9 @@
                     {% else %} style="background-color: red"
                     {% endif %}
             ></td>
+            <td>
+                <a href="{{ path('edit_compte', {'id': monCompte.id}) }}">Modifier</a>
+            </td>
         </tr>
         </tbody>
     </table>

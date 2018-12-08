@@ -54,18 +54,19 @@
                     <td>{{ monCompte.fraisTenue|number_format(0, ',', '.') }} $</td>
                     <td>{{ monCompte.dateOuverture|date('d/m/Y') }}</td>
                     <td
-                            {% if monCompte.open %} style="background-color: green"
-                            {% else %} style="background-color: red"
-                            {% endif %}
+                        {% if monCompte.open %} style="background-color: green"
+                        {% else %} style="background-color: red"
+                        {% endif %}
                     ></td>
                 </tr>
             {% else %}
-                <tr>
-                    <td colspan="4">Aucun compte -
-                        <a href="{{ path('add_compte', {'id': monClient.id}) }}">Créer un compte</a>
-                    </td>
-                </tr>
+                <tr><td colspan="5">Aucun compte</td></tr>
             {% endfor %}
+            <tr>
+                <td colspan="5">
+                    <a href="{{ path('add_compte', {'id': monClient.id}) }}">Créer un compte</a>
+                </td>
+            </tr>
         </tbody>
     </table>
 
