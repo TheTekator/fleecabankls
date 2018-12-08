@@ -41,6 +41,31 @@ class CompteController extends AbstractController
             array('monFormulaire' => $monFormulaire->createView()));
     }
 
+    /**
+     * @Route("/compte/edit/{id}", name="edit_compte", requirements={"id"="\d+"})
+     * @param Request $request
+     * @param $id
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
+     */
+    public function editCompte(Request $request, $id)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $monCompte = $em->getRepository(Compte::class)->find($id);
+        $monFormulaire = $this->createForm(CompteType::class, $monCompte);
+        $monFormulaire->handleRequest($request);
+
+        if($monFormulaire->isSubmitted() && $monFormulaire->isValid())
+        {
+            $em->flush();
+            $this->addFlash('succes', 'Compte correctement modifié.');
+
+            return $this->redirectToRoute('show_compte',
+                array('id' => $monCompte->getId()));
+        }
+
+        return $this->render('Compte/edit.html.twig',
+            array('monFormulaire' => $monFormulaire->createView()));
+    }
 
     /**
      * @Route("/compte/{id}", name="show_compte", requirements={"id"="\d+"})

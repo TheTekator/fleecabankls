@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Editer compte {{ monFormulaire.vars.value.number }} - {{ monFormulaire.vars.value.client.name }}</h1>
+
+    {{ include('Compte/form.html.twig') }}
+
+    <div>
+        <a href="{{ path('show_compte', {'id': monFormulaire.vars.value.id}) }}">Retour à la fiche du compte</a>
+    </div>
+{% endblock %}
