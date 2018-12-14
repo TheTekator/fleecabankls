@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class CompteController extends AbstractController
 {
     /**
-     * @Route("/compte/add/{id}", name="add_compte", requirements={"id"="\d+"})
+     * @Route("/client/{id}/compte/add", name="add_compte", requirements={"id"="\d+"})
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -42,7 +42,7 @@ class CompteController extends AbstractController
     }
 
     /**
-     * @Route("/compte/edit/{id}", name="edit_compte", requirements={"id"="\d+"})
+     * @Route("/compte/{id}/edit", name="edit_compte", requirements={"id"="\d+"})
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response

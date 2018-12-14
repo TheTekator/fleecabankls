@@ -1,5 +1,3 @@
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.8.0/locales/bootstrap-datepicker.fr.min.js"></script>
-
 {{ form_start(monFormulaire) }}
 
 <div class="form-group row">
@@ -27,7 +25,7 @@
     {{ form_label(monFormulaire.dateOuverture, "Date de l'ouverture :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
     {{ form_errors(monFormulaire.dateOuverture) }}
     <div class="col-sm-2">
-        {{ form_widget(monFormulaire.dateOuverture, {'attr': {'class': 'form-control datepicker'}}) }}
+        {{ form_widget(monFormulaire.dateOuverture, {'attr': {'class': 'form-control'}}) }}
     </div>
 </div>
 
@@ -55,9 +53,3 @@
 </div>
 
 {{ form_end(monFormulaire) }}
-
-<script>
-    $('.datepicker').datepicker({
-        format: 'dd/mm/yyyy'
-    });
-</script>

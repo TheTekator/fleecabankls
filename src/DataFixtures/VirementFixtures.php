@@ -13,37 +13,37 @@ class VirementFixtures extends Fixture implements OrderedFixtureInterface
     {
         $virement1 = new Virement();
         $virement1->setMontant(20800);
-        $virement1->setDatePrevue(new \DateTime('11/19/2016'));
+        $virement1->setDateVirement(new \DateTime('11/19/2016'));
         $virement1->setValide(true);
 
         $virement2 = new Virement();
         $virement2->setMontant(20800);
-        $virement2->setDatePrevue(new \DateTime('11/20/2016'));
+        $virement2->setDateVirement(new \DateTime('11/20/2016'));
         $virement2->setValide(true);
 
         $virement3 = new Virement();
         $virement3->setMontant(20800);
-        $virement3->setDatePrevue(new \DateTime('11/22/2016'));
+        $virement3->setDateVirement(new \DateTime('11/22/2016'));
         $virement3->setValide(true);
 
         $virement4 = new Virement();
         $virement4->setMontant(33600);
-        $virement4->setDatePrevue(new \DateTime('11/29/2016'));
+        $virement4->setDateVirement(new \DateTime('11/29/2016'));
         $virement4->setValide(true);
 
         $virement5 = new Virement();
         $virement5->setMontant(43600);
-        $virement5->setDatePrevue(new \DateTime('12/05/2016'));
+        $virement5->setDateVirement(new \DateTime('12/05/2016'));
         $virement5->setValide(false);
 
         $virement6 = new Virement();
         $virement6->setMontant(33600);
-        $virement6->setDatePrevue(new \DateTime('12/06/2016'));
+        $virement6->setDateVirement(new \DateTime('12/12/2016'));
         $virement6->setValide(false);
 
         $virement7 = new Virement();
         $virement7->setMontant(23600);
-        $virement7->setDatePrevue(new \DateTime('12/20/2016'));
+        $virement7->setDateVirement(new \DateTime('12/20/2016'));
         $virement7->setValide(false);
 
         $manager->persist($virement1);

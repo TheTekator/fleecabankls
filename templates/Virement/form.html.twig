@@ -1,0 +1,33 @@
+{{ form_start(monFormulaire) }}
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.dateVirement, "Date du virement : ", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.dateVirement) }}
+    <div class="col-sm-3">
+        {{ form_widget(monFormulaire.dateVirement, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+<div class="form-group row">
+    {{ form_label(monFormulaire.montant, "Montant :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.montant) }}
+    <div class="col-sm-2">
+        {{ form_widget(monFormulaire.montant, {'attr': {'class': 'form-control'}}) }}
+    </div>
+    {{ form_label(monFormulaire.valide, "Effectué ? :", {'label_attr': {'class': 'col-sm-2 col-form-label'}}) }}
+    {{ form_errors(monFormulaire.valide) }}
+    <div class="col-sm-2">
+        {{ form_widget(monFormulaire.valide, {'attr': {'class': 'form-control'}}) }}
+    </div>
+</div>
+
+{{ form_rest(monFormulaire) }}
+{{ form_errors(monFormulaire) }}
+<br/>
+<div class="form-group row">
+    <div class="offset-sm-2 col-sm-6">
+        <input type="submit" class="btn btn-primary form-control" value="Valider">
+    </div>
+</div>
+
+{{ form_end(monFormulaire) }}

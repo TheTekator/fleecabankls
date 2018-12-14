@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\PretRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Pret
 {
@@ -50,19 +51,19 @@ class Pret
     private $termine;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     private $raison;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Virement", mappedBy="pret")
+     * @ORM\OneToMany(targetEntity="App\Entity\Virement", mappedBy="pret", cascade={"persist"})
      */
     private $virements;
 
     public function __construct()
     {
         $today = new \DateTime();
-        $today->sub(new \DateInterval("P2Y"));
+        $today->modify("-2 years");
         $this->dateOuverture = $today;
         $this->virements = new ArrayCollection();
     }
@@ -206,5 +207,44 @@ class Pret
         }
 
         return false;
+    }
+
+    public function getMontantTotal()
+    {
+        return $this->getMontant() * (1 + ($this->getInteret() / 100));
+    }
+
+    private function calculateMontantVirement()
+    {
+        if($this->getVirements()->count() == $this->getDuree() - 1)
+        {
+            $monRemboursement = 0;
+            foreach ($this->getVirements() as $unVirement)
+            {
+                $monRemboursement += $unVirement->getMontant();
+            }
+
+            return $this->getMontantTotal() - $monRemboursement;
+        }
+
+        return ceil($this->getMontantTotal() / $this->getDuree());
+    }
+
+    /**
+     * @ORM\PrePersist()
+     */
+    public function createVirementsPrevus()
+    {
+        $maDate = clone $this->getDateOuverture();
+        for ($i = 0; $i < $this->getDuree(); $i++)
+        {
+            $monVirement = new Virement();
+            $monVirement->setValide(false);
+            $maDate->modify('+1 week');
+            $monVirement->setDateVirement(clone $maDate);
+            $monVirement->setMontant($this->calculateMontantVirement());
+
+            $this->addVirement($monVirement);
+        }
     }
 }

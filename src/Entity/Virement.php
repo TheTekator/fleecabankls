@@ -24,7 +24,7 @@ class Virement
     /**
      * @ORM\Column(type="date")
      */
-    private $datePrevue;
+    private $dateVirement;
 
     /**
      * @ORM\Column(type="boolean")
@@ -53,14 +53,14 @@ class Virement
         return $this;
     }
 
-    public function getDatePrevue(): ?\DateTimeInterface
+    public function getDateVirement(): ?\DateTimeInterface
     {
-        return $this->datePrevue;
+        return $this->dateVirement;
     }
 
-    public function setDatePrevue(\DateTimeInterface $datePrevue): self
+    public function setDateVirement(\DateTimeInterface $dateVirement): self
     {
-        $this->datePrevue = $datePrevue;
+        $this->dateVirement = $dateVirement;
 
         return $this;
     }
@@ -92,14 +92,14 @@ class Virement
     public function isLate()
     {
         $today = new \DateTime("today");
-        if($this->getDatePrevue() < $today->modify('-2years')) return true;
+        if($this->getDateVirement() < $today->modify('-2 years')) return true;
         return false;
     }
 
     public function isToday()
     {
         $today = new \DateTime("today");
-        if($this->getDatePrevue() == $today->modify('-2years')) return true;
+        if($this->getDateVirement() == $today->modify('-2 years')) return true;
         return false;
     }
 }

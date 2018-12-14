@@ -27,9 +27,8 @@
                 <td>{{ monPret.montant|number_format(0, ',', '.') }} $</td>
                 <td>{{ monPret.interet }}%</td>
                 <td>{{ monPret.duree }} semaines</td>
-                {% set montantTotal = monPret.montant * ((monPret.interet / 100) + 1) %}
-                <td>{{ montantTotal|number_format(0, ',', '.') }} $</td>
-                <td>{{ montantTotal / monPret.duree|number_format(0, ',', '.') }} $</td>
+                <td>{{ monPret.montantTotal|number_format(0, ',', '.') }} $</td>
+                <td>{{ (monPret.montantTotal / monPret.duree)|number_format(2, ',', '.') }} $</td>
                 <td>{{ monPret.dateOuverture|date('d/m/Y') }}</td>
                 <td><a href="{{ path('edit_pret', {'id': monPret.id}) }}">Modifier</a></td>
             </tr>
@@ -49,10 +48,10 @@
             </tr>
         </thead>
         <tbody>
-        {% set restant = monPret.montant * ((monPret.interet / 100) + 1) %}
+        {% set restant = monPret.montantTotal %}
         {% for monVirement in monPret.virements %}
                 <tr>
-                    <td>{{ monVirement.datePrevue|date('d/m/Y') }}</td>
+                    <td>{{ monVirement.dateVirement|date('d/m/Y') }}</td>
                     <td>{{ monVirement.montant|number_format(0, ',', '.') }} $</td>
                     {% if monVirement.valide %}
                         <td style="background-color: green">Effectué</td>
@@ -64,6 +63,7 @@
                         <td>En attente</td>
                     {% endif %}
                     <td>{{ (restant - monVirement.montant)|number_format(0, ',', '.') }} $</td>
+                    <td><a href="{{ path('edit_virement', {'id': monVirement.id}) }}">Modifier</a></td>
                 </tr>
                 {% set restant = restant - monVirement.montant %}
             {% endfor %}

@@ -27,7 +27,7 @@ class PretController extends AbstractController
     }
 
     /**
-     * @Route("/pret/add/{id}", name="add_pret", requirements={"id"="\d+"})
+     * @Route("/client/{id}/pret/add", name="add_pret", requirements={"id"="\d+"})
      * @param Request $request
      * @param $id
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
@@ -56,7 +56,7 @@ class PretController extends AbstractController
     }
 
     /**
-     * @Route("/pret/edit/{id}", name="edit_pret", requirements={"id"="\d+"})
+     * @Route("/pret/{id}/edit", name="edit_pret", requirements={"id"="\d+"})
      */
     public function editPret(Request $request, $id)
     {

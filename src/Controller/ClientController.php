@@ -51,7 +51,7 @@ class ClientController extends AbstractController
     }
 
     /**
-     * @Route("/client/edit/{id}", name="edit_client", requirements={"id"="\d+"})
+     * @Route("/client/{id}/edit", name="edit_client", requirements={"id"="\d+"})
      * @param Request $request
      * @return \Symfony\Component\HttpFoundation\RedirectResponse|Response
      */

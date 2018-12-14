@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Fiche de virement</h1>
+
+    <table>
+        <thead>
+            <tr>
+                <td>Date</td>
+                <td>Montant</td>
+                <td>Status</td>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>{{ monVirement.dateVirement|date('d/m/Y') }}</td>
+                <td>{{ monVirement.montant }}</td>
+                {% if monVirement.valide %}
+                    <td style="background-color: green">Validé</td>
+                {% elseif monVirement.today %}
+                    <td style="background-color: yellow">A faire aujourd'hui</td>
+                {% elseif monVirement.late %}
+                    <td style="background-color: red">En retard</td>
+                {% else %}
+                    <td>En attente</td>
+                {% endif %}
+            </tr>
+        </tbody>
+    </table>
+{% endblock %}
