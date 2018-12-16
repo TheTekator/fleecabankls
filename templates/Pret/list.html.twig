@@ -32,7 +32,7 @@
                 {% endif %}
                 <td>{{ monPret.client.name }}</td>
                 <td>{{ monPret.client.phone }}</td>
-                <td>{{ monPret.montant }}</td>
+                <td>{{ monPret.montant|number_format(0, ',', '.') }}</td>
                 <td><a href="{{ path('show_pret', {'id' : monPret.id}) }}">Voir</a></td>
             </tr>
         {% endfor %}

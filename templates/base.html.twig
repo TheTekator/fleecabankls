@@ -30,6 +30,9 @@
                         <li {% if app.request.attributes.get('_route') starts with 'prets' %}class="active"{% endif %}>
                             <a href="{{ path("list_prets") }}" id="menuPrets">Prêts</a>
                         </li>
+                        <li {% if app.request.attributes.get('_route') starts with 'epargne' %}class="active"{% endif %}>
+                            <a href="{{ path("list_epargnes") }}" id="menuEpargnes">Epargnes</a>
+                        </li>
                         <li {% if app.request.attributes.get('_route') starts with 'contact' %}class="active"{% endif %}>
                             <a href="{{ path("contact") }}" id="menuContact">Contact</a>
                         </li>

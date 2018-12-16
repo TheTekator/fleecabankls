@@ -108,4 +108,36 @@
         </tr>
         </tbody>
     </table>
+
+    <hr>
+
+    <table>
+        <caption style="caption-side: top">Informations épargnes</caption>
+        <thead>
+        <tr>
+            <td>Status de l'épargne</td>
+            <td>Somme</td>
+            <td>Date de début</td>
+            <td>Intérêts</td>
+            <td>Détails</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for monEpargne in monClient.epargnes %}
+            <tr>
+                {% if monEpargne.finished %}<td style="background-color: white">Terminée</td>
+                {% else %}<td style="background-color: green">En cours</td>
+                {% endif %}
+                <td>{{ monEpargne.montant|number_format(0, ',', '.') }} $</td>
+                <td>{{ monEpargne.dateSouscription|date('d/m/Y') }}</td>
+                <td>{{ monEpargne.interets }}%</td><td><a href="{{ path('show_epargne', {'id': monEpargne.id}) }}">Détails</a></td>
+            </tr>
+        {% endfor %}
+        <tr>
+            <td colspan="7">
+                <a href="{{ path('add_epargne', {'id': monClient.id}) }}">Créer une épargne</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 {% endblock %}

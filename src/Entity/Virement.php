@@ -91,6 +91,7 @@ class Virement
 
     public function isLate()
     {
+        if($this->getValide()) return false;
         $today = new \DateTime("today");
         if($this->getDateVirement() < $today->modify('-2 years')) return true;
         return false;
@@ -98,6 +99,7 @@ class Virement
 
     public function isToday()
     {
+        if($this->getValide()) return false;
         $today = new \DateTime("today");
         if($this->getDateVirement() == $today->modify('-2 years')) return true;
         return false;

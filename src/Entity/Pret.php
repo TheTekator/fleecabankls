@@ -190,6 +190,7 @@ class Pret
 
     public function isLate()
     {
+        if($this->getTermine()) return false;
         foreach($this->getVirements() as $monVirement)
         {
             if($monVirement->isLate()) return true;
@@ -200,6 +201,7 @@ class Pret
 
     public function isToday()
     {
+        if($this->getTermine()) return false;
         foreach($this->getVirements() as $monVirement)
         {
             if($monVirement->isLate()) return false;

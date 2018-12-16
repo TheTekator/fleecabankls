@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Editer épargne de {{ monFormulaire.vars.value.client.name }}</h1>
+
+    {{ include('Epargne/form.html.twig') }}
+
+    <div>
+        <a href="{{ path('show_epargne', {'id': monFormulaire.vars.value.id}) }}">Retour à la fiche de l'épargne</a>
+    </div>
+{% endblock %}

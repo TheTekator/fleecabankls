@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Liste des epargnes</h1>
+
+    <div>
+        <a href="{{ path('list_epargnesEnCours') }}">Epargnes en cours</a> -
+        <a href="{{ path('list_epargnesCloturees') }}">Epargnes cloturées</a> -
+        <a href="{{ path('list_epargnes') }}">Toutes les épargnes</a>
+    </div>
+
+    <hr/>
+
+    <table>
+        <thead>
+        <tr>
+            <td>Status</td>
+            <td>Client</td>
+            <td>Téléphone</td>
+            <td>Date début</td>
+            <td>Montant déposé</td>
+            <td>Intérêts</td>
+            <td>Montant si retrait aujourd'hui</td>
+            <td>Détails</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% for monEpargne in mesEpargnes %}
+            <tr>
+                {% if monEpargne.finished %}<td style="background-color: white">Terminée</td>
+                {% else %}<td style="background-color: green">En cours</td>
+                {% endif %}
+                <td>{{ monEpargne.client.name }}</td>
+                <td>{{ monEpargne.client.phone }}</td>
+                <td>{{ monEpargne.dateSouscription|date('d/m/Y') }}</td>
+                <td>{{ monEpargne.montant|number_format(0, ',', '.') }} $</td>
+                <td>{{ monEpargne.interets }} %</td>
+                <td>{{ monEpargne.calculateMontantRetrait(date()|date_modify('-2 years'))|number_format(0, ',', '.') }} $</td>
+                <td><a href="{{ path('show_epargne', {'id' : monEpargne.id}) }}">Voir</a></td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">Aucune épargne ne correspond à la recherche :(</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+        <tfoot>
+        <tr>
+            <td>Status</td>
+            <td>Client</td>
+            <td>Téléphone</td>
+            <td>Date début</td>
+            <td>Montant emprunté</td>
+            <td>Intérêts</td>
+            <td>Montant du retrait</td>
+            <td>Détails</td>
+        </tr>
+        </tfoot>
+    </table>
+{% endblock %}

@@ -31,10 +31,12 @@
                             {% endif %}
                         {% endfor %}
                     </td>
-                    {% if monClient.hasPretEnCours %}<td style="background-color: green">En cours</td>
+                    {% if monClient.pretEnCours %}<td style="background-color: green">En cours</td>
                     {% else %}<td style="background-color: white">Rien</td>
                     {% endif %}
-                    <td>O/N</td>
+                    {% if monClient.epargneEnCours %}<td style="background-color: green">En cours</td>
+                    {% else %}<td style="background-color: white">Rien</td>
+                    {% endif %}
                 </tr>
             {% endfor %}
         </tbody>

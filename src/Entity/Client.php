@@ -48,10 +48,16 @@ class Client
      */
     private $lienDernierEmploi;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Epargne", mappedBy="client")
+     */
+    private $epargnes;
+
     public function __construct()
     {
         $this->comptes = new ArrayCollection();
         $this->prets = new ArrayCollection();
+        $this->epargnes = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -174,6 +180,46 @@ class Client
         foreach($this->getPrets() as $monPret)
         {
             if(!$monPret->getTermine()) return true;
+        }
+        return false;
+    }
+
+    /**
+     * @return Collection|Epargne[]
+     */
+    public function getEpargnes(): Collection
+    {
+        return $this->epargnes;
+    }
+
+    public function addEpargne(Epargne $epargne): self
+    {
+        if (!$this->epargnes->contains($epargne)) {
+            $this->epargnes[] = $epargne;
+            $epargne->setClient($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEpargne(Epargne $epargne): self
+    {
+        if ($this->epargnes->contains($epargne)) {
+            $this->epargnes->removeElement($epargne);
+            // set the owning side to null (unless already changed)
+            if ($epargne->getClient() === $this) {
+                $epargne->setClient(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function hasEpargneEnCours()
+    {
+        foreach ($this->getEpargnes() as $uneEpargne)
+        {
+            if(!$uneEpargne->getFinished()) return true;
         }
         return false;
     }

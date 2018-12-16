@@ -1,0 +1,60 @@
+{% extends 'base.html.twig' %}
+
+{% block content %}
+    <h1>Fiche de l'épargne de <a
+                href="{{ path('show_client', {'id': monEpargne.client.id}) }}">{{ monEpargne.client.name }}</a></h1>
+
+    <table>
+        <thead>
+        <tr>
+            <td>En cours ?</td>
+            <td>Montant</td>
+            <td>Intérêts</td>
+            <td>Date d'ouverture</td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+            <td>
+                {% if monEpargne.finished %} Terminé
+                {% else %} En cours
+                {% endif %}
+            </td>
+            <td>{{ monEpargne.montant|number_format(0, ',', '.') }} $</td>
+            <td>{{ monEpargne.interets }}%</td>
+            <td>{{ monEpargne.dateSouscription|date('d/m/Y') }}</td>
+            <td><a href="{{ path('edit_epargne', {'id': monEpargne.id}) }}">Modifier</a></td>
+        </tr>
+        </tbody>
+    </table>
+
+    <hr>
+
+    <table>
+        <caption style="caption-side: top">Possibilités de retraits :</caption>
+        <thead>
+        <tr>
+            <td>Date du retrait</td>
+            <td>Montant du retrait</td>
+            <td>Temps épargné</td>
+        </tr>
+        </thead>
+        <tbody>
+        {% set ecartSemaine = (date(monEpargne.dateSouscription).diff(date(date()|date_modify('-2 years'))).days / 7)|round(0, 'floor') %}
+        <tr>
+            <td>Aujourd'hui</td>
+            <td>{{ monEpargne.calculateMontantRetrait(date()|date_modify('-2 years'))|number_format(0, ',', '.') }} $</td>
+            <td>{{ ecartSemaine }} semaines</td>
+        </tr>
+
+        {% for i in 1..4 %}
+            <tr>
+                {% set premierJour = monEpargne.dateSouscription|date_modify('+' ~ (ecartSemaine + i) ~ ' weeks') %}
+                <td>Entre {{ premierJour|date('d/m/Y') }} et {{ premierJour|date_modify('+6 days')|date('d/m/Y') }}</td>
+                <td>{{ monEpargne.calculateMontantRetrait(monEpargne.dateSouscription|date_modify('+' ~ (ecartSemaine + i) ~ ' weeks'))|number_format(0, ',', '.') }} $</td>
+                <td>{{ ecartSemaine + i }} semaines</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

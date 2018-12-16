@@ -21,9 +21,6 @@ class PretFixtures extends Fixture implements OrderedFixtureInterface
         $pret1->setMontant(60000);
         $pret1->setRaison('Achat logement privé');
         $pret1->setTermine(true);
-        $pret1->addVirement($this->getReference('virement1'));
-        $pret1->addVirement($this->getReference('virement2'));
-        $pret1->addVirement($this->getReference('virement3'));
 
         $pret2 = new Pret();
         $pret2->setClient($this->getReference('client1'));
@@ -33,14 +30,10 @@ class PretFixtures extends Fixture implements OrderedFixtureInterface
         $pret2->setMontant(120000);
         $pret2->setRaison('Achat véhicule perso');
         $pret2->setTermine(false);
-        $pret2->addVirement($this->getReference('virement4'));
-        $pret2->addVirement($this->getReference('virement5'));
-        $pret2->addVirement($this->getReference('virement6'));
-        $pret2->addVirement($this->getReference('virement7'));
 
         $pret3 = new Pret();
         $pret3->setClient($this->getReference('client2'));
-        $pret3->setDateOuverture(new \DateTime('11/22/2016'));
+        $pret3->setDateOuverture(new \DateTime('11/25/2016'));
         $pret3->setDuree(4);
         $pret3->setInteret(8);
         $pret3->setMontant(80000);
@@ -60,6 +53,14 @@ class PretFixtures extends Fixture implements OrderedFixtureInterface
         $manager->persist($pret2);
         $manager->persist($pret3);
         $manager->persist($pret4);
+
+        $manager->flush();
+
+        foreach ($pret1->getVirements() as $unVirement)
+        {
+            $unVirement->setValide(true);
+        }
+        $pret2->getVirements()->first()->setValide(true);
 
         $manager->flush();
     }
